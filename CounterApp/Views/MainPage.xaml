@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:CounterApp.Models"
+    x:Class="CounterApp.Views.MainPage"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CounterNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="23" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="CounterValueStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+
+            <Style x:Key="PlusButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="LightGreen" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+
+            <Style x:Key="MinusButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="LightCoral" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+
+            <Style x:Key="CounterCardStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="AliceBlue" />
+                <Setter Property="Stroke" Value="SkyBlue" />
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="15" />
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,20" Spacing="20">
+            <Label
+                Text="Licznik Stepien"
+                FontSize="35"
+                FontAttributes="Bold"
+                TextColor="Black"
+                HorizontalOptions="Center" />
+
+            <Label Text="Nazwa licznika:" FontSize="20" TextColor="Black" />
+            <Entry
+                x:Name="counterNameEntry"
+                Placeholder="Wpisz nazwę"
+                BackgroundColor="Azure"
+                TextColor="Black" />
+
+            <Label Text="Wartość początkowa:" FontSize="20" TextColor="Black" />
+            <Entry
+                x:Name="startingValueEntry"
+                Placeholder="Domyślnie 0"
+                Keyboard="Numeric"
+                BackgroundColor="Azure"
+                TextColor="Black" />
+
+            <Button
+                Text="Dodaj licznik"
+                Clicked="AddCounter"
+                BackgroundColor="SkyBlue"
+                TextColor="Black" />
+
+            <Label
+                Text="Twoje liczniki:"
+                FontSize="25"
+                FontAttributes="Bold"
+                TextColor="Black" />
+
+            <VerticalStackLayout
+                    x:Name="countersLayout"
+                    Spacing="15">
+                
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Counter">
+                        <Border Style="{StaticResource CounterCardStyle}">
+                            <VerticalStackLayout Spacing="18" Padding="20">
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource CounterNameStyle}" />
+
+                                <HorizontalStackLayout
+                                    Spacing="15"
+                                    HorizontalOptions="Center">
+                                    <Button
+                                        Text="-"
+                                        Style="{StaticResource MinusButtonStyle}"
+                                        WidthRequest="65"
+                                        HeightRequest="55"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="DecreaseCounter" />
+
+                                    <Label
+                                        Text="{Binding Value}"
+                                        Style="{StaticResource CounterValueStyle}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="100"
+                                        HorizontalTextAlignment="Center" />
+
+                                    <Button
+                                        Text="+"
+                                        Style="{StaticResource PlusButtonStyle}"
+                                        WidthRequest="65"
+                                        HeightRequest="55"
+                                        CommandParameter="{Binding .}"
+                                        Clicked="IncreaseCounter" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
