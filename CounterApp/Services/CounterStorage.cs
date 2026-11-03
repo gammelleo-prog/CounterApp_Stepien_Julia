@@ -8,8 +8,7 @@ namespace CounterApp.Services;
 
 public static class CounterStorage
 {
-    public static void SaveCounters(IEnumerable<Counter> counters)
-    {
+    public static void SaveCounters(List<Counter> counters){
         string json = JsonSerializer.Serialize(counters);
         Preferences.Default.Set("counters", json);
     }
